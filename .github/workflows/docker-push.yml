@@ -20,18 +20,18 @@ jobs:
       - name: Configure AWS credentials via OIDC
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          role-to-assume: "arn:aws:iam::831926627033:role/GitHubECRPushRole"
+          aws-region: "us-east-1" 
 
       - name: Login to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v2
 
       - name: Build and push Docker image
         env:
-          AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-          ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
-          IMAGE_TAG: ${{ secrets.IMAGE_TAG }}
+          AWS_ACCOUNT_ID: "831926627033" 
+          AWS_REGION: "us-east-1" 
+          ECR_REPOSITORY:"tasky" 
+          IMAGE_TAG: "latest"  
         run: |
           cd tasky  # adjust this path if needed
           docker build -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:$IMAGE_TAG .
