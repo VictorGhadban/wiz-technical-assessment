@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tasky
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tasky
+  template:
+    metadata:
+      labels:
+        app: tasky
+    spec:
+      containers:
+      - name: tasky
+        image: 831926627033.dkr.ecr.us-east-1.amazonaws.com/tasky:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: MONGO_URL
+          value: "mongodb://100.26.172.193:27017/test"
+        - name: MONGODB_URI
+          value: "mongodb://100.26.172.193:27017/test"
+        - name: SECRET_KEY
+          value: "secret123"
+        securityContext:
+          runAsUser: 0
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tasky-service
+spec:
+  selector:
+    app: tasky
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080

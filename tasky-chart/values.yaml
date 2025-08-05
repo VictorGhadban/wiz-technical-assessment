@@ -1,0 +1,16 @@
+replicaCount: 1
+
+image:
+  repository: 831926627033.dkr.ecr.us-east-1.amazonaws.com/tasky
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: LoadBalancer
+  port: 80
+  targetPort: 8080
+
+mongodb:
+  uri: "mongodb://100.26.172.193:27017/test"
+
+secretKey: "secret123"
