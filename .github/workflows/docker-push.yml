@@ -30,7 +30,7 @@ jobs:
         env:
           AWS_ACCOUNT_ID: "831926627033" 
           AWS_REGION: "us-east-1" 
-          ECR_REPOSITORY:"tasky" 
+          ECR_REPOSITORY: "tasky" 
           IMAGE_TAG: "latest"  
         run: |
           cd tasky  # adjust this path if needed
